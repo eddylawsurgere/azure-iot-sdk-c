@@ -1623,7 +1623,8 @@ void IoTHubTransport_AMQP_Common_DoWork(TRANSPORT_LL_HANDLE handle)
                         number_of_devices++;
                     }
 
-                    if (((float)number_of_faulty_devices/(float)number_of_devices) >= DEVICE_MULTIPLEXING_FAULTY_DEVICE_RATIO_RECONNECTION_THRESHOLD)
+                    if (number_of_faulty_devices > 0 &&
+                        ((float)number_of_faulty_devices/(float)number_of_devices) >= DEVICE_MULTIPLEXING_FAULTY_DEVICE_RATIO_RECONNECTION_THRESHOLD)
                     {
                         LogError("Reconnection required. %ld of %ld registered devices are failing.", number_of_faulty_devices, number_of_devices);
 
