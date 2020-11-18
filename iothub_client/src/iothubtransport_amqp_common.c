@@ -1156,7 +1156,7 @@ static int IoTHubTransport_AMQP_Common_Device_DoWork(AMQP_TRANSPORT_DEVICE_INSTA
                 result = MU_FAILURE;
             }
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_COMMON_09_045: [If the registered device has a failure, it shall be stopped using amqp_device_stop()]
-            else if (amqp_device_delayed_stop(registered_device->device_handle, 10) != RESULT_OK)
+            else if (amqp_device_stop(registered_device->device_handle) != RESULT_OK)
             {
                 LogError("Failed to stop reset device '%s' (amqp_device_stop failed)", STRING_c_str(registered_device->device_id));
                 result = MU_FAILURE;
