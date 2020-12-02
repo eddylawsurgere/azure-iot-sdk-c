@@ -836,6 +836,7 @@ int amqp_device_start_async(AMQP_DEVICE_HANDLE handle, SESSION_HANDLE session_ha
             // Codes_SRS_DEVICE_09_021: [`session_handle` and `cbs_handle` shall be saved into the `instance`]
             instance->session_handle = session_handle;
             instance->cbs_handle = cbs_handle;
+	    instance->stop_delay_ms = 0;
 
             // Codes_SRS_DEVICE_09_022: [The device state shall be updated to DEVICE_STATE_STARTING, and state changed callback invoked]
             update_state(instance, DEVICE_STATE_STARTING);
@@ -911,7 +912,7 @@ int amqp_device_stop(AMQP_DEVICE_HANDLE handle)
         AMQP_DEVICE_INSTANCE* instance = (AMQP_DEVICE_INSTANCE*)handle;
 
         // Codes_SRS_DEVICE_09_025: [If the device state is already DEVICE_STATE_STOPPED or DEVICE_STATE_STOPPING, amqp_device_stop shall return a non-zero result]
-        if (instance->state == DEVICE_STATE_STOPPED || instance->state == DEVICE_STATE_STOPPING)
+        if (instance->state == DEVICE_STATE_STOPPED || instance->state == DEVICE_STATE_STOPPING && instance->stop_delay_ms == 0)
         {
             LogError("Failed stopping device '%s' (device is already stopped or stopping)", instance->config->device_id);
             result = MU_FAILURE;
