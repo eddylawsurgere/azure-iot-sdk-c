@@ -28,8 +28,8 @@ repo_exists ()
 
 deps_install ()
 {
-    sudo apt-get update
-    sudo apt-get install -y $deps
+    apt-get update
+    apt-get install -y $deps
 }
 
 clone_source ()
